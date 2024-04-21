@@ -131,4 +131,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # nvim 
 export PATH="$PATH:/opt/nvim-linux64/bin"
-alias config='/usr/bin/git --git-dir=/home/nizo/.config-synced/ --work-tree=/home/nizo/.config/'
+
+if [ -f ~/.config/bash_aliases.sh ]; then
+    . ~/.config/bash_aliases.sh
+fi
