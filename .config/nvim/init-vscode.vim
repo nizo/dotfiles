@@ -1,3 +1,6 @@
+" extension default keybindings
+" https://github.com/vscode-neovim/vscode-neovim/blob/master/vim/vscode-window-commands.vim
+
 " keybindings
 nnoremap gr :call VSCodeNotify('editor.action.referenceSearch.trigger')<CR> 
 

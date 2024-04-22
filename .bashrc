@@ -155,11 +155,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-#[ -f $HOME/.config/fzf/completion.bash] && . $HOME/.config/fzf/completion.bash
-#[ -f $HOME/.config/fzf/key-bindings.bash] && . $HOME/.config/fzf/key-bindings.bash
 
-# fzf
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # nvim 
 export PATH="$PATH:/opt/nvim-linux64/bin"
@@ -167,6 +163,12 @@ export PATH="$PATH:/opt/nvim-linux64/bin"
 if [ -f ~/.config/bash_aliases.sh ]; then
     . ~/.config/bash_aliases.sh
 fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_OPTS="--height=40%  --info=inline --border --margin=1 --padding=1 --preview \"batcat --color=always --style=numbers --line-range=:500 {}\""
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+bind -x '"\C-p": nvim $(fzf);'
+
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
 # export FZF_CTRL_T_OPTS="
