@@ -11,4 +11,7 @@ alias gr='git remote -v'
 #fixes
 alias cat='batcat'
 
-alias fzz='$HOME/.bin/fzz'
+alias ff='$HOME/.bin/ff'
+
+alias vi="nvim"
+alias vim="nvim"

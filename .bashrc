@@ -123,17 +123,17 @@ source "$OSH"/oh-my-bash.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+    export EDITOR='nvim'
+else
+    export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
+export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Set personal aliases, overriding those provided by oh-my-bash libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-bash
@@ -143,8 +143,6 @@ source "$OSH"/oh-my-bash.sh
 # Example aliases
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
-
-# export PATH="$PATH:/home/nizo/bin/nvim"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -167,21 +165,5 @@ fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 export FZF_DEFAULT_OPTS="--height=40%  --info=inline --border --margin=1 --padding=1 --preview \"batcat --color=always --style=numbers --line-range=:500 {}\""
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+
 bind -x '"\C-p": nvim $(fzf);'
-
-
-# Preview file content using bat (https://github.com/sharkdp/bat)
-# export FZF_CTRL_T_OPTS="
-  # --walker-skip .git,node_modules,target
-  # --preview 'bat -n --color=always {}'
-  # --bind 'ctrl-/:change-preview-window(down|hidden|)'"
-
-
-# CTRL-/ to toggle small preview window to see the full command
-# CTRL-Y to copy the command into clipboard using pbcopy
-# export FZF_CTRL_R_OPTS="
-#   --preview 'echo {}' --preview-window up:3:hidden:wrap
-#   --bind 'ctrl-/:toggle-preview'
-#   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
-#   --color header:italic
-#   --header 'Press CTRL-Y to copy command into clipboard'"
