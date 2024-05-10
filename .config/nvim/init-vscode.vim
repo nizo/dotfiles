@@ -4,8 +4,13 @@
 " keybindings
 nnoremap gr :call VSCodeNotify('editor.action.referenceSearch.trigger')<CR> 
 
-" nmap n nzz
-" nmap N Nzz
+nmap <silent> u <Cmd>call VSCodeNotify('undo')<CR>
+nmap <silent> <C-r> <Cmd>call VSCodeNotify('redo')<CR>
+
+
+
+nmap n nzz
+nmap N Nzz
 " nmap * *zz
 " nmap # #zz
 " nmap g* g*zz
@@ -32,6 +37,7 @@ set scrolloff=8
 call plug#begin()
 
 Plug 'tpope/vim-surround'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 call plug#end()
 
