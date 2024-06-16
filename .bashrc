@@ -167,3 +167,27 @@ export FZF_DEFAULT_OPTS="--height=40%  --info=inline --border --margin=1 --paddi
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 bind -x '"\C-p": nvim $(fzf);'
+
+fixpermissions() {
+    local default_user="nizo"
+    local default_group="www-data"
+
+    local user="${1:-$default_user}"
+    local group="${2:-$default_group}"
+
+    echo "This will recursively change permissions to 777 and ownership to $user:$group in the current directory."
+    read -p "Are you sure you want to proceed? (y/n): " confirm
+
+    if [[ $confirm != [yY] ]]; then
+        echo "Operation cancelled."
+        return 1
+    fi
+
+    echo "Changing permissions to 777 recursively..."
+    sudo chmod -R 777 .
+    
+    echo "Changing ownership to $user:$group recursively..."
+    sudo chown -R "$user":"$group" .
+
+    echo "Permissions and ownership updated."
+}
