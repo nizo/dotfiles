@@ -14,20 +14,8 @@ vim.g.clipboard = {
 }
 
 -- load proper profile
---
--- if vim.g.vscode then
--- 	require('nizo-vscode')
--- else 
---     require('nizo')
--- end
-
-
---vim.keymap.set("n", "er>pv", vim.cmd.Ex)
-
-vim.api.nvim_set_keymap("n", "J", "5j", {})
-
 if vim.g.vscode then
-	vim.cmd[[source $HOME/.config/nvim/nizo-vscode.vimrc]]
+	require('nizo-vscode')
 else 
 	require('nizo')
 end
