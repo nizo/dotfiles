@@ -28,7 +28,10 @@ return require('packer').startup(function(use)
     })
 
     use("nvim-treesitter/nvim-treesitter-context")
+
     use("mg979/vim-visual-multi")
+
+    use("tpope/vim-surround")
 
     use {
         'VonHeikemen/lsp-zero.nvim',
