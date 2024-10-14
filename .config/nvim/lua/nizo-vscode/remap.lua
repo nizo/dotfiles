@@ -5,3 +5,14 @@
 -- vim.api.nvim_set_keymap('n', 'n', 'nzz', { noremap = true })
 -- vim.api.nvim_set_keymap('n', 'N', 'Nzz', { noremap = true })
 
+-- Efficiently exit insert mode
+vim.api.nvim_set_keymap('i', 'jj', '<Esc>', { noremap = true, silent = true })
+
+-- Insert a new line below and remain in normal mode
+vim.api.nvim_set_keymap('n', '<leader>o', 'o<Esc>', { noremap = true, silent = true })
+
+-- Insert a new line above and remain in normal mode
+vim.api.nvim_set_keymap('n', '<leader>O', 'O<Esc>', { noremap = true, silent = true })
+
+-- Insert a new line above and remain in normal mode
+vim.api.nvim_set_keymap('n', 'O', 'O<Esc>', { noremap = true, silent = true })

@@ -2,23 +2,12 @@ vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
+    --[[
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.5',
         requires = { {'nvim-lua/plenary.nvim'} }
     }
 
-    use ({ "catppuccin/nvim", as = "catppuccin",
-        config = function()
-            vim.cmd('colorscheme catppuccin')
-        end
-    })
-
-    use ({ "rose-pine/neovim", as = "rose-pine",
-        config = function()
-            vim.cmd('colorscheme rose-pine')
-        end
-    })
-    
     use ({
         'nvim-treesitter/nvim-treesitter',
         run = function()
@@ -28,10 +17,6 @@ return require('packer').startup(function(use)
     })
 
     use("nvim-treesitter/nvim-treesitter-context")
-
-    use("mg979/vim-visual-multi")
-
-    use("tpope/vim-surround")
 
     use {
         'VonHeikemen/lsp-zero.nvim',
@@ -55,5 +40,21 @@ return require('packer').startup(function(use)
             {'rafamadriz/friendly-snippets'},
         }
     }
+    ]]--
+    use ({ "catppuccin/nvim", as = "catppuccin",
+        config = function()
+            vim.cmd('colorscheme catppuccin')
+        end
+    })
+
+    use ({ "rose-pine/neovim", as = "rose-pine",
+        config = function()
+            vim.cmd('colorscheme rose-pine')
+        end
+    })
+
+
+    use("mg979/vim-visual-multi")
+    use("tpope/vim-surround")
 
 end)
