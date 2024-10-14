@@ -5,12 +5,11 @@ case $- in
 esac
 
 # Path to your oh-my-bash installation.
-#export OSH='/home/nizo/.oh-my-bash'
+export OSH='/home/nizo/.oh-my-bash'
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-bash is loaded.
-# OSH_THEME="font"
-OSH_THEME="binaryanomaly"
+OSH_THEME="font"
 
 # If you set OSH_THEME to "random", you can ignore themes you don't like.
 # OMB_THEME_RANDOM_IGNORED=("powerbash10k" "wanelo")
@@ -114,7 +113,7 @@ plugins=(
 #      plugins+=(tmux-autoattach)
 #  fi
 
-#source "$OSH"/oh-my-bash.sh
+source "$OSH"/oh-my-bash.sh
 
 # User configuration
 # export MANPATH="/usr/local/man:$MANPATH"
