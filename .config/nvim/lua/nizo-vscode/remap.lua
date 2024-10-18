@@ -9,7 +9,7 @@ vim.g.maplocalleader = " "
 vim.api.nvim_set_keymap('n', '<leader>w', ':w<CR>', { noremap = true, silent = true })
 
 
--- Efficiently exit insert mode
+-- Exit insert mode
 keymap({'i'}, 'jj', '<Esc>', opt)
 
 -- Insert a new line below and remain in normal mode
@@ -37,17 +37,29 @@ keymap({"n", "v"}, "<leader>d", "<cmd>lua require('vscode').action('editor.actio
 -- View problems
 keymap({"n", "v"}, "<leader>sp", "<cmd>lua require('vscode').action('workbench.actions.view.problems')<CR>")
 
--- ClearAll
+-- Clear all
 keymap({"n", "v"}, "<leader>cn", "<cmd>lua require('vscode').action('notifications.clearAll')<CR>")
 
--- QuickOpen
+-- Quick open
 keymap({"n", "v"}, "<leader>ff", "<cmd>lua require('vscode').action('workbench.action.quickOpen')<CR>")
 
--- showCommands
+-- Show commands
 keymap({"n", "v"}, "<leader>cp", "<cmd>lua require('vscode').action('workbench.action.showCommands')<CR>")
 
--- Code-runner.run
+-- Code runner
 keymap({"n", "v"}, "<leader>pr", "<cmd>lua require('vscode').action('code-runner.run')<CR>")
 
--- FormatDocument
+-- Format document
 keymap({"n", "v"}, "<leader>fd", "<cmd>lua require('vscode').action('editor.action.formatDocument')<CR>")
+
+-- Navigate to previuos error in current 
+keymap({"n", "v"}, "<leader>e", "<cmd>lua require('vscode').action('editor.action.marker.prev')<CR>")
+
+-- Navigate to next error in current 
+keymap({"n", "v"}, "<leader>p", "<cmd>lua require('vscode').action('editor.action.marker.next')<CR>")
+
+-- Navigate to previuos error in files
+keymap({"n", "v"}, "<leader>fe", "<cmd>lua require('vscode').action('editor.action.marker.prevInFiles')<CR>")
+
+-- Navigate to next error in files
+keymap({"n", "v"}, "<leader>fp", "<cmd>lua require('vscode').action('editor.action.marker.nextInFiles')<CR>")
