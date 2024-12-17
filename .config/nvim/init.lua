@@ -19,3 +19,6 @@ if vim.g.vscode then
 else 
 	require('nizo')
 end
+
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
