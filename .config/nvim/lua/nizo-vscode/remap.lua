@@ -8,7 +8,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.api.nvim_set_keymap('n', '<leader>w', ':w<CR>', { noremap = true, silent = true })
 
-
 -- Exit insert mode
 keymap({'i'}, 'jj', '<Esc>', opt)
 
@@ -43,9 +42,6 @@ keymap({"n", "v"}, "<leader>sp", "<cmd>lua require('vscode').action('workbench.a
 -- Clear all
 keymap({"n", "v"}, "<leader>cn", "<cmd>lua require('vscode').action('notifications.clearAll')<CR>")
 
--- Toggle fold 
-keymap({"n", "v"}, "<leader><leader>", "<cmd>lua require('vscode').action('editor.toggleFold')<CR>")
-
 -- Code runner
 keymap({"n", "v"}, "<leader>pr", "<cmd>lua require('vscode').action('code-runner.run')<CR>")
 
@@ -55,13 +51,47 @@ keymap({"n", "v"}, "<leader>e", "<cmd>lua require('vscode').action('editor.actio
 -- Navigate to next error in current 
 keymap({"n", "v"}, "<leader>p", "<cmd>lua require('vscode').action('editor.action.marker.next')<CR>")
 
--- keymap('n', "'", "'zz")
--- keymap('n', "`", "`zz")
+-- Remap 'n' to search and center the line
+keymap("n", "n", function()
+  vim.cmd(":norm! n")
+  local curline = vim.fn.line(".")
+  local vscode = require('vscode')
+  vscode.call("revealLine", { args = {lineNumber = curline, at = "center"} })
+end, { noremap = true, silent = true })
+
+-- Remap 'N' to search backwards and center the line
+keymap("n", "N", function()
+  vim.cmd(":norm! N")
+  local curline = vim.fn.line(".")
+  local vscode = require('vscode')
+  vscode.call("revealLine", { args = {lineNumber = curline, at = "center"} })
+end, { noremap = true, silent = true })
+
+keymap('n', 'za', "<Cmd>call VSCodeNotify('editor.toggleFold')<CR>", opts)
+keymap('n', 'zR', "<Cmd>call VSCodeNotify('editor.unfoldAll')<CR>", opts)
+keymap('n', 'zM', "<Cmd>call VSCodeNotify('editor.foldAll')<CR>", opts)
+keymap('n', 'zo', "<Cmd>call VSCodeNotify('editor.unfold')<CR>", opts)
+keymap('n', 'zO', "<Cmd>call VSCodeNotify('editor.unfoldRecursively')<CR>", opts)
+keymap('n', 'zc', "<Cmd>call VSCodeNotify('editor.fold')<CR>", opts)
+keymap('n', 'zC', "<Cmd>call VSCodeNotify('editor.foldRecursively')<CR>", opts)
+
+keymap('n', 'z1', "<Cmd>call VSCodeNotify('editor.foldLevel1')<CR>", opts)
+keymap('n', 'z2', "<Cmd>call VSCodeNotify('editor.foldLevel2')<CR>", opts)
+keymap('n', 'z3', "<Cmd>call VSCodeNotify('editor.foldLevel3')<CR>", opts)
+keymap('n', 'z4', "<Cmd>call VSCodeNotify('editor.foldLevel4')<CR>", opts)
+keymap('n', 'z5', "<Cmd>call VSCodeNotify('editor.foldLevel5')<CR>", opts)
+keymap('n', 'z6', "<Cmd>call VSCodeNotify('editor.foldLevel6')<CR>", opts)
+keymap('n', 'z7', "<Cmd>call VSCodeNotify('editor.foldLevel7')<CR>", opts)
+
+-- Visual mode mapping
+keymap('x', 'zV', "<Cmd>call VSCodeNotify('editor.foldAllExcept')<CR>", opts)
+
+-- Toggle fold 
+-- keymap({"n", "v"}, "<leader><leader>", "<cmd>lua require('vscode').action('editor.toggleFold')<CR>")
 
 -- Fix cursor movement so the folds are not automatically unfolded
 -- keymap({"n", "v"}, "j", "<cmd>lua require('vscode').action('cursorDown')<CR>")
 -- keymap({"n", "v"}, "k", "<cmd>lua require('vscode').action('cursorUp')<CR>")
-
 
 -- Format document
 -- keymap({"n", "v"}, "<leader>fd", "<cmd>lua require('vscode').action('editor.action.formatDocument')<CR>")
@@ -83,3 +113,4 @@ keymap({"n", "v"}, "<leader>p", "<cmd>lua require('vscode').action('editor.actio
 
 -- Unfold 
 -- keymap({"n", "v"}, "<leader>u", "<cmd>lua require('vscode').action('editor.unfold')<CR>")
+
