@@ -165,8 +165,6 @@ fi
 export FZF_DEFAULT_OPTS="--height=40%  --info=inline --border --margin=1 --padding=1 --preview \"batcat --color=always --style=numbers --line-range=:500 {}\""
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
-bind -x '"\C-p": nvim $(fzf);'
-
 fixpermissions() {
     local default_user="nizo"
     local default_group="www-data"
@@ -190,3 +188,6 @@ fixpermissions() {
 
     echo "Permissions and ownership updated."
 }
+
+# Cursor 
+export PATH="$PATH:/mnt/c/Users/nizo/AppData/Local/Programs/cursor/resources/app/bin"

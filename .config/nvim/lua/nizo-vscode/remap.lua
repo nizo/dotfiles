@@ -86,6 +86,10 @@ keymap('n', 'z7', "<Cmd>call VSCodeNotify('editor.foldLevel7')<CR>", opts)
 -- Visual mode mapping
 keymap('x', 'zV', "<Cmd>call VSCodeNotify('editor.foldAllExcept')<CR>", opts)
 
+-- Close all but active editor
+keymap('n', '<C-a>w', "<Cmd>call VSCodeNotify('workbench.action.closeOtherEditors')<CR>", opts)
+
+
 -- Toggle fold 
 -- keymap({"n", "v"}, "<leader><leader>", "<cmd>lua require('vscode').action('editor.toggleFold')<CR>")
 
