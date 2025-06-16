@@ -17,6 +17,9 @@ keymap({'n'}, '<leader>o', 'o<Esc>', opt)
 -- Insert a new line above and remain in normal mode
 keymap({'n'}, '<leader>O', 'O<Esc>', opt)
 
+-- Delete current line and past the content of clipboard
+keymap({'n'}, 'P', 'pkddyy', opt)
+
 -- Removes highlighting after escaping vim search
 keymap({'n'}, '<Esc>', '<Esc>:noh<CR>', opt)
 
@@ -89,9 +92,9 @@ keymap('x', 'zV', "<Cmd>call VSCodeNotify('editor.foldAllExcept')<CR>", opts)
 -- Close all but active editor
 keymap('n', '<C-a>w', "<Cmd>call VSCodeNotify('workbench.action.closeOtherEditors')<CR>", opts)
 
-
--- Toggle fold 
--- keymap({"n", "v"}, "<leader><leader>", "<cmd>lua require('vscode').action('editor.toggleFold')<CR>")
+-- Toggle brekapoint
+-- keymap({"n", "v"}, "<leader>b", "<cmd>lua require('vscode').action('editor.debug.action.toggleBreakpoint')<CR>", opt)
+keymap({"n", "v"}, "<leader>b", "<cmd>lua require('vscode').action('editor.debug.action.toggleBreakpoint')<CR>")
 
 -- Fix cursor movement so the folds are not automatically unfolded
 -- keymap({"n", "v"}, "j", "<cmd>lua require('vscode').action('cursorDown')<CR>")

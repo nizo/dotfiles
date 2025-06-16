@@ -189,5 +189,10 @@ fixpermissions() {
     echo "Permissions and ownership updated."
 }
 
+ffind() {
+  rg --hidden --no-heading --line-number --color=always "$1" |
+    fzf --ansi --preview 'bat --style=numbers --color=always --highlight-line={1} {2}'
+}
+
 # Cursor 
 export PATH="$PATH:/mnt/c/Users/nizo/AppData/Local/Programs/cursor/resources/app/bin"
