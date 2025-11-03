@@ -194,5 +194,7 @@ ffind() {
     fzf --ansi --preview 'bat --style=numbers --color=always --highlight-line={1} {2}'
 }
 
+alias r=". ranger"
+
 # Cursor 
 export PATH="$PATH:/mnt/c/Users/nizo/AppData/Local/Programs/cursor/resources/app/bin"

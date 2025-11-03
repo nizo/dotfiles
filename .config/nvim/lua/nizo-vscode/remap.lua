@@ -70,54 +70,34 @@ keymap("n", "N", function()
   vscode.call("revealLine", { args = {lineNumber = curline, at = "center"} })
 end, { noremap = true, silent = true })
 
-keymap('n', 'za', "<Cmd>call VSCodeNotify('editor.toggleFold')<CR>", opts)
-keymap('n', 'zR', "<Cmd>call VSCodeNotify('editor.unfoldAll')<CR>", opts)
-keymap('n', 'zM', "<Cmd>call VSCodeNotify('editor.foldAll')<CR>", opts)
-keymap('n', 'zo', "<Cmd>call VSCodeNotify('editor.unfold')<CR>", opts)
-keymap('n', 'zO', "<Cmd>call VSCodeNotify('editor.unfoldRecursively')<CR>", opts)
-keymap('n', 'zc', "<Cmd>call VSCodeNotify('editor.fold')<CR>", opts)
-keymap('n', 'zC', "<Cmd>call VSCodeNotify('editor.foldRecursively')<CR>", opts)
 
-keymap('n', 'z1', "<Cmd>call VSCodeNotify('editor.foldLevel1')<CR>", opts)
-keymap('n', 'z2', "<Cmd>call VSCodeNotify('editor.foldLevel2')<CR>", opts)
-keymap('n', 'z3', "<Cmd>call VSCodeNotify('editor.foldLevel3')<CR>", opts)
-keymap('n', 'z4', "<Cmd>call VSCodeNotify('editor.foldLevel4')<CR>", opts)
-keymap('n', 'z5', "<Cmd>call VSCodeNotify('editor.foldLevel5')<CR>", opts)
-keymap('n', 'z6', "<Cmd>call VSCodeNotify('editor.foldLevel6')<CR>", opts)
-keymap('n', 'z7', "<Cmd>call VSCodeNotify('editor.foldLevel7')<CR>", opts)
+-- setup folding
+vim.api.nvim_set_keymap('n', 'j', 'gj', { noremap = false, silent = true })
+vim.api.nvim_set_keymap('n', 'k', 'gk', { noremap = false, silent = true })
 
--- Visual mode mapping
-keymap('x', 'zV', "<Cmd>call VSCodeNotify('editor.foldAllExcept')<CR>", opts)
+local vscode = require('vscode')
+
+local function map(mode, lhs, rhs)
+  vim.keymap.set(mode, lhs, function() vscode.call(rhs) end, { silent = true, noremap = true })
+end
+
+-- setup remapping 
+keymap("n", "zM", "<cmd>lua require('vscode').action('editor.foldAll')<CR>", opts)
+keymap("n", "zR", "<cmd>lua require('vscode').action('editor.unfoldAll')<CR>", opts)
+keymap("n", "zc", "<cmd>lua require('vscode').action('editor.fold')<CR>", opts)
+keymap("n", "zC", "<cmd>lua require('vscode').action('editor.foldRecursively')<CR>", opts)
+keymap("n", "zo", "<cmd>lua require('vscode').action('editor.unfold')<CR>", opts)
+keymap("n", "zO", "<cmd>lua require('vscode').action('editor.unfoldRecursively')<CR>", opts)
+keymap("n", "za", "<cmd>lua require('vscode').action('editor.toggleFold')<CR>", opts)
 
 -- Close all but active editor
-keymap('n', '<C-a>w', "<Cmd>call VSCodeNotify('workbench.action.closeOtherEditors')<CR>", opts)
+keymap('n', '<C-a>w', "<cmd>lua require('vscode').action('workbench.action.closeOtherEditors')<CR>", opts)
 
 -- Toggle brekapoint
--- keymap({"n", "v"}, "<leader>b", "<cmd>lua require('vscode').action('editor.debug.action.toggleBreakpoint')<CR>", opt)
 keymap({"n", "v"}, "<leader>b", "<cmd>lua require('vscode').action('editor.debug.action.toggleBreakpoint')<CR>")
 
--- Fix cursor movement so the folds are not automatically unfolded
--- keymap({"n", "v"}, "j", "<cmd>lua require('vscode').action('cursorDown')<CR>")
--- keymap({"n", "v"}, "k", "<cmd>lua require('vscode').action('cursorUp')<CR>")
-
--- Format document
--- keymap({"n", "v"}, "<leader>fd", "<cmd>lua require('vscode').action('editor.action.formatDocument')<CR>")
-
 -- Navigate to previuos error in files
--- keymap({"n", "v"}, "<leader>fe", "<cmd>lua require('vscode').action('editor.action.marker.prevInFiles')<CR>")
+keymap({"n", "v"}, "<leader>fe", "<cmd>lua require('vscode').action('editor.action.marker.prevInFiles')<CR>")
 
 -- Navigate to next error in files
--- keymap({"n", "v"}, "<leader>fp", "<cmd>lua require('vscode').action('editor.action.marker.nextInFiles')<CR>")
-
--- Quick open
--- keymap({"n", "v"}, "<leader>ff", "<cmd>lua require('vscode').action('workbench.action.quickOpen')<CR>")
-
--- Show commands
--- keymap({"n", "v"}, "<leader>cp", "<cmd>lua require('vscode').action('workbench.action.showCommands')<CR>")
-
--- Fold
--- keymap({"n", "v"}, "<leader>f", "<cmd>lua require('vscode').action('editor.fold')<CR>")
-
--- Unfold 
--- keymap({"n", "v"}, "<leader>u", "<cmd>lua require('vscode').action('editor.unfold')<CR>")
-
+ keymap({"n", "v"}, "<leader>fp", "<cmd>lua require('vscode').action('editor.action.marker.nextInFiles')<CR>")
