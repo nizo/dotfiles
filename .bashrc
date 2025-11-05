@@ -155,7 +155,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 
 # nvim 
-export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin/nvim"
 
 if [ -f ~/.config/bash_aliases.sh ]; then
     . ~/.config/bash_aliases.sh
