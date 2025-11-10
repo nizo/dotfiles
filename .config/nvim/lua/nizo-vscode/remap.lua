@@ -101,3 +101,12 @@ keymap({"n", "v"}, "<leader>fe", "<cmd>lua require('vscode').action('editor.acti
 
 -- Navigate to next error in files
  keymap({"n", "v"}, "<leader>fp", "<cmd>lua require('vscode').action('editor.action.marker.nextInFiles')<CR>")
+
+-- toggle fold
+keymap("n", "<leader><leader>", "<cmd>lua require('vscode').action('editor.toggleFold')<CR>", opts)
+
+-- close active editor
+keymap("n", "<leader>w", "<cmd>lua require('vscode').action('workbench.action.closeActiveEditor')<CR>", opts)
+
+-- close unmodified editors
+keymap("n", "<leader>uw", "<cmd>lua require('vscode').action('workbench.action.closeUnmodifiedEditors')<CR>", opts)
