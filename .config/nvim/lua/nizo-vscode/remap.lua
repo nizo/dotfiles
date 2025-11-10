@@ -1,27 +1,30 @@
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
+vscode = require('vscode')
 
 -- remap leader key
 keymap("n", "<Space>", "", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.api.nvim_set_keymap('n', '<leader>w', ':w<CR>', { noremap = true, silent = true })
+
+-- save file
+-- keymap('n', '<leader>w', ':w<CR>', opts)
 
 -- Exit insert mode
-keymap({'i'}, 'jj', '<Esc>', opt)
+keymap('i', 'jj', '<Esc>', opts)
 
 -- Insert a new line below and remain in normal mode
-keymap({'n'}, '<leader>o', 'o<Esc>', opt)
+keymap('n', '<leader>o', 'o<Esc>', opts)
 
 -- Insert a new line above and remain in normal mode
-keymap({'n'}, '<leader>O', 'O<Esc>', opt)
+keymap('n', '<leader>O', 'O<Esc>', opts)
 
 -- Delete current line and past the content of clipboard
-keymap({'n'}, 'P', 'pkddyy', opt)
+keymap('n', 'P', 'pkddyy', opts)
 
 -- Removes highlighting after escaping vim search
-keymap({'n'}, '<Esc>', '<Esc>:noh<CR>', opt)
+keymap('n', '<Esc>', '<Esc>:noh<CR>', opts)
 
 -- Move text up and down
 keymap("v", "J", ":m .+1<CR>==", opts)
@@ -34,31 +37,30 @@ keymap({"n", "v"}, "d", '"_d', opts)
 keymap("n", "dd", '"_dd', opts)
 
 -- Toggle breakpoints
-keymap({"n", "v"}, "<leader>b", "<cmd>lua require('vscode').action('editor.debug.action.toggleBreakpoint')<CR>")
+keymap({"n", "v"}, "<leader>b", "<cmd>lua vscode.action('editor.debug.action.toggleBreakpoint')<CR>", opts)
 
 -- Hover
-keymap({"n", "v"}, "<leader>d", "<cmd>lua require('vscode').action('editor.action.showHover')<CR>")
+keymap({"n", "v"}, "<leader>d", "<cmd>lua vscode.action('editor.action.showHover')<CR>", opts)
 
 -- View problems
-keymap({"n", "v"}, "<leader>sp", "<cmd>lua require('vscode').action('workbench.actions.view.problems')<CR>")
+keymap({"n", "v"}, "<leader>sp", "<cmd>lua vscode.action('workbench.actions.view.problems')<CR>", opts)
 
 -- Clear all
-keymap({"n", "v"}, "<leader>cn", "<cmd>lua require('vscode').action('notifications.clearAll')<CR>")
+keymap({"n", "v"}, "<leader>cn", "<cmd>lua vscode.action('notifications.clearAll')<CR>", opts)
 
 -- Code runner
-keymap({"n", "v"}, "<leader>pr", "<cmd>lua require('vscode').action('code-runner.run')<CR>")
+keymap({"n", "v"}, "<leader>pr", "<cmd>lua vscode.action('code-runner.run')<CR>", opts)
 
 -- Navigate to previuos error in current 
-keymap({"n", "v"}, "<leader>e", "<cmd>lua require('vscode').action('editor.action.marker.prev')<CR>")
+keymap({"n", "v"}, "<leader>e", "<cmd>lua vscode.action('editor.action.marker.prev')<CR>", opts)
 
 -- Navigate to next error in current 
-keymap({"n", "v"}, "<leader>p", "<cmd>lua require('vscode').action('editor.action.marker.next')<CR>")
+keymap({"n", "v"}, "<leader>p", "<cmd>lua vscode.action('editor.action.marker.next')<CR>", opts)
 
 -- Remap 'n' to search and center the line
 keymap("n", "n", function()
   vim.cmd(":norm! n")
   local curline = vim.fn.line(".")
-  local vscode = require('vscode')
   vscode.call("revealLine", { args = {lineNumber = curline, at = "center"} })
 end, { noremap = true, silent = true })
 
@@ -66,47 +68,56 @@ end, { noremap = true, silent = true })
 keymap("n", "N", function()
   vim.cmd(":norm! N")
   local curline = vim.fn.line(".")
-  local vscode = require('vscode')
   vscode.call("revealLine", { args = {lineNumber = curline, at = "center"} })
-end, { noremap = true, silent = true })
+end, opts)
 
+-- Remap "gi" to find last insert and center the line
+keymap("n", "gi", function()
+  vim.cmd("normal! gi")
+  local curline = vim.fn.line(".")
+  vscode.call("revealLine", { args = {lineNumber = curline, at = "center"} })
+end, opts)
 
--- setup folding
-vim.api.nvim_set_keymap('n', 'j', 'gj', { noremap = false, silent = true })
-vim.api.nvim_set_keymap('n', 'k', 'gk', { noremap = false, silent = true })
+-- Remap "gv" to find last select and center the line
+keymap("n", "gv", function()
+  vim.cmd("normal! gv")
+  local curline = vim.fn.line(".")
+  vscode.call("revealLine", { args = {lineNumber = curline, at = "center"} })
+end, opts)
 
-local vscode = require('vscode')
-
-local function map(mode, lhs, rhs)
-  vim.keymap.set(mode, lhs, function() vscode.call(rhs) end, { silent = true, noremap = true })
-end
+-- navigation cross folded regions
+keymap("n", "j", "gj")
+keymap("n", "k", "gk")
 
 -- setup remapping 
-keymap("n", "zM", "<cmd>lua require('vscode').action('editor.foldAll')<CR>", opts)
-keymap("n", "zR", "<cmd>lua require('vscode').action('editor.unfoldAll')<CR>", opts)
-keymap("n", "zc", "<cmd>lua require('vscode').action('editor.fold')<CR>", opts)
-keymap("n", "zC", "<cmd>lua require('vscode').action('editor.foldRecursively')<CR>", opts)
-keymap("n", "zo", "<cmd>lua require('vscode').action('editor.unfold')<CR>", opts)
-keymap("n", "zO", "<cmd>lua require('vscode').action('editor.unfoldRecursively')<CR>", opts)
-keymap("n", "za", "<cmd>lua require('vscode').action('editor.toggleFold')<CR>", opts)
+keymap("n", "zM", "<cmd>lua vscode.action('editor.foldAll')<CR>", opts)
+keymap("n", "zR", "<cmd>lua vscode.action('editor.unfoldAll')<CR>", opts)
+keymap("n", "zc", "<cmd>lua vscode.action('editor.fold')<CR>", opts)
+keymap("n", "zC", "<cmd>lua vscode.action('editor.foldRecursively')<CR>", opts)
+keymap("n", "zo", "<cmd>lua vscode.action('editor.unfold')<CR>", opts)
+keymap("n", "zO", "<cmd>lua vscode.action('editor.unfoldRecursively')<CR>", opts)
+keymap("n", "za", "<cmd>lua vscode.action('editor.toggleFold')<CR>", opts)
 
 -- Close all but active editor
-keymap('n', '<C-a>w', "<cmd>lua require('vscode').action('workbench.action.closeOtherEditors')<CR>", opts)
+keymap('n', '<C-a>w', "<cmd>lua vscode.action('workbench.action.closeOtherEditors')<CR>", opts)
 
--- Toggle brekapoint
-keymap({"n", "v"}, "<leader>b", "<cmd>lua require('vscode').action('editor.debug.action.toggleBreakpoint')<CR>")
+-- Toggle breakpoint
+keymap({"n", "v"}, "<leader>b", "<cmd>lua vscode.action('editor.debug.action.toggleBreakpoint')<CR>", opts)
 
--- Navigate to previuos error in files
-keymap({"n", "v"}, "<leader>fe", "<cmd>lua require('vscode').action('editor.action.marker.prevInFiles')<CR>")
+-- Navigate to previous error in files
+keymap({"n", "v"}, "<leader>fe", "<cmd>lua vscode.action('editor.action.marker.prevInFiles')<CR>", opts)
 
 -- Navigate to next error in files
- keymap({"n", "v"}, "<leader>fp", "<cmd>lua require('vscode').action('editor.action.marker.nextInFiles')<CR>")
+keymap({"n", "v"}, "<leader>fp", "<cmd>lua vscode.action('editor.action.marker.nextInFiles')<CR>", opts)
 
 -- toggle fold
-keymap("n", "<leader><leader>", "<cmd>lua require('vscode').action('editor.toggleFold')<CR>", opts)
+keymap("n", "<leader><leader>", "<cmd>lua vscode.action('editor.toggleFold')<CR>", opts)
 
 -- close active editor
-keymap("n", "<leader>w", "<cmd>lua require('vscode').action('workbench.action.closeActiveEditor')<CR>", opts)
+keymap("n", "<leader>w", "<cmd>lua vscode.action('workbench.action.closeActiveEditor')<CR>", opts)
 
 -- close unmodified editors
-keymap("n", "<leader>uw", "<cmd>lua require('vscode').action('workbench.action.closeUnmodifiedEditors')<CR>", opts)
+keymap("n", "<leader>uw", "<cmd>lua vscode.action('workbench.action.closeUnmodifiedEditors')<CR>", opts)
+
+-- close other editors
+keymap("n", "<leader>ow", "<cmd>lua vscode.action('workbench.action.closeOtherEditors')<CR>", opts)
