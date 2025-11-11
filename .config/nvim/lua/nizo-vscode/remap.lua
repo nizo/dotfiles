@@ -1,6 +1,8 @@
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
+
+
 vscode = require('vscode')
 
 -- remap leader key
@@ -120,4 +122,4 @@ keymap("n", "<leader>w", "<cmd>lua vscode.action('workbench.action.closeActiveEd
 keymap("n", "<leader>uw", "<cmd>lua vscode.action('workbench.action.closeUnmodifiedEditors')<CR>", opts)
 
 -- close other editors
-keymap("n", "<leader>ow", "<cmd>lua vscode.action('workbench.action.closeOtherEditors')<CR>", opts)
+keymap("n", "<leader>rw", "<cmd>lua vscode.action('workbench.action.closeOtherEditors')<CR>", opts)
