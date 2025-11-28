@@ -198,3 +198,6 @@ alias r=". ranger"
 
 # Cursor 
 export PATH="$PATH:/mnt/c/Users/nizo/AppData/Local/Programs/cursor/resources/app/bin"
+
+# Antigravity
+export PATH="$PATH:/mnt/c/Users/nizo/AppData/Local/Programs/Antigravity/bin"

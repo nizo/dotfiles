@@ -2,7 +2,6 @@
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
-
 vscode = require('vscode')
 
 -- remap leader key
@@ -10,8 +9,16 @@ keymap("n", "<Space>", "", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
--- save file
--- keymap('n', '<leader>w', ':w<CR>', opts)
+-- Helper to run a normal command safely and center the cursor in VSCode
+local function safe_normal_and_center(cmd)
+  return function()
+    local ok = pcall(vim.cmd, "normal! " .. cmd)  -- safely execute normal command
+    if ok then
+      local curline = vim.fn.line(".")
+      vscode.call("revealLine", { args = { lineNumber = curline, at = "center" } })
+    end
+  end
+end
 
 -- Exit insert mode
 keymap('i', 'jj', '<Esc>', opts)
@@ -60,32 +67,22 @@ keymap({"n", "v"}, "<leader>e", "<cmd>lua vscode.action('editor.action.marker.pr
 keymap({"n", "v"}, "<leader>p", "<cmd>lua vscode.action('editor.action.marker.next')<CR>", opts)
 
 -- Remap 'n' to search and center the line
-keymap("n", "n", function()
-  vim.cmd(":norm! n")
-  local curline = vim.fn.line(".")
-  vscode.call("revealLine", { args = {lineNumber = curline, at = "center"} })
-end, { noremap = true, silent = true })
+keymap("n", "n", safe_normal_and_center("n"), opts)
 
 -- Remap 'N' to search backwards and center the line
-keymap("n", "N", function()
-  vim.cmd(":norm! N")
-  local curline = vim.fn.line(".")
-  vscode.call("revealLine", { args = {lineNumber = curline, at = "center"} })
-end, opts)
+keymap("n", "N", safe_normal_and_center("N"), opts)
 
 -- Remap "gi" to find last insert and center the line
-keymap("n", "gi", function()
-  vim.cmd("normal! gi")
-  local curline = vim.fn.line(".")
-  vscode.call("revealLine", { args = {lineNumber = curline, at = "center"} })
-end, opts)
+keymap("n", "gi", safe_normal_and_center("gi"), opts)
 
 -- Remap "gv" to find last select and center the line
-keymap("n", "gv", function()
-  vim.cmd("normal! gv")
-  local curline = vim.fn.line(".")
-  vscode.call("revealLine", { args = {lineNumber = curline, at = "center"} })
-end, opts)
+keymap("n", "gv", safe_normal_and_center("gv"), opts)
+
+-- Find previous occurence of word under the cursor
+keymap("n", "*", safe_normal_and_center("*"), opts)
+
+-- Find next occurence of word under the cursor
+keymap("n", "#", safe_normal_and_center("#"), opts)
 
 -- navigation cross folded regions
 keymap("n", "j", "gj")
@@ -100,26 +97,46 @@ keymap("n", "zo", "<cmd>lua vscode.action('editor.unfold')<CR>", opts)
 keymap("n", "zO", "<cmd>lua vscode.action('editor.unfoldRecursively')<CR>", opts)
 keymap("n", "za", "<cmd>lua vscode.action('editor.toggleFold')<CR>", opts)
 
--- Close all but active editor
-keymap('n', '<C-a>w', "<cmd>lua vscode.action('workbench.action.closeOtherEditors')<CR>", opts)
 
 -- Toggle breakpoint
 keymap({"n", "v"}, "<leader>b", "<cmd>lua vscode.action('editor.debug.action.toggleBreakpoint')<CR>", opts)
 
 -- Navigate to previous error in files
-keymap({"n", "v"}, "<leader>fe", "<cmd>lua vscode.action('editor.action.marker.prevInFiles')<CR>", opts)
+keymap({"n", "v"}, "<leader>l", "<cmd>lua vscode.action('editor.action.marker.prevInFiles')<CR>", opts)
 
 -- Navigate to next error in files
-keymap({"n", "v"}, "<leader>fp", "<cmd>lua vscode.action('editor.action.marker.nextInFiles')<CR>", opts)
+keymap({"n", "v"}, "<leader>h", "<cmd>lua vscode.action('editor.action.marker.nextInFiles')<CR>", opts)
 
--- toggle fold
-keymap("n", "<leader><leader>", "<cmd>lua vscode.action('editor.toggleFold')<CR>", opts)
+-- Toggle fold
+keymap("n", "<leader>f", "<cmd>lua vscode.action('editor.toggleFold')<CR>", opts)
 
--- close active editor
+-- Close active editor
 keymap("n", "<leader>w", "<cmd>lua vscode.action('workbench.action.closeActiveEditor')<CR>", opts)
 
--- close unmodified editors
+-- Close unmodified editors
 keymap("n", "<leader>uw", "<cmd>lua vscode.action('workbench.action.closeUnmodifiedEditors')<CR>", opts)
 
--- close other editors
+-- Close all but active editor
 keymap("n", "<leader>rw", "<cmd>lua vscode.action('workbench.action.closeOtherEditors')<CR>", opts)
+
+-- Trigger find all
+keymap("n", "<leader>s", "<cmd>lua vscode.action('workbench.action.findInFiles')<CR>", opts)
+
+-- Toggle sidebar visibility
+keymap("n", "<leader><leader>", "<cmd>lua vscode.action('workbench.action.toggleSidebarVisibility')<CR>", opts)
+
+-- Navigate via all primary sidebar types
+keymap("n", "<leader>1", "<cmd>lua vscode.action('workbench.view.explorer')<CR>", opts)
+keymap("n", "<leader>2", "<cmd>lua vscode.action('workbench.view.search')<CR>", opts)
+keymap("n", "<leader>3", "<cmd>lua vscode.action('workbench.view.scm')<CR>", opts)
+keymap("n", "<leader>4", "<cmd>lua vscode.action('workbench.view.debug')<CR>", opts)
+keymap("n", "<leader>5", "<cmd>lua vscode.action('workbench.view.extensions')<CR>", opts)
+keymap("n", "<leader>6", "<cmd>lua vscode.action('workbench.view.testing')<CR>", opts)
+
+-- Yank the current word under the cursor and open findInFiles sidebar
+keymap(
+  "n",
+  "<leader>*",
+  "<cmd>normal! yiw<CR><cmd>lua vscode.action('workbench.action.findInFiles')<CR>",
+  opts
+)
