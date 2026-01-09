@@ -189,34 +189,11 @@ fixpermissions() {
     echo "Permissions and ownership updated."
 }
 
-ffind() {
-    rm -f /tmp/rg-fzf-{r,f}
-    RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
-    INITIAL_QUERY="${*:-}"
-
-    fzf --ansi --disabled --query "$INITIAL_QUERY" \
-            --height 100% \
-            --nth 1 \
-            --delimiter : \
-            --bind "start:reload:$RG_PREFIX {q}" \
-            --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
-            --exact \
-            --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
-              echo "rebind(change)+change-prompt(1. ripgrep> )+disable-search+transform-query:echo \{q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r" ||
-              echo "unbind(change)+change-prompt(2. fzf> )+enable-search+transform-query:echo \{q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f"' \
-            --color "hl:-1:underline,hl+:-1:underline:reverse" \
-            --prompt '1. ripgrep> ' \
-            --header 'CTRL-T: Switch between ripgrep (content) / fzf (path) | ALT-O: CD and Exit' \
-            --preview 'bat --color=always {1} --highlight-line {2}' \
-            --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
-            --bind 'enter:become(vim {1} +{2})' \
-            --bind 'alt-enter:execute:cd $(dirname {1}) && exec $SHELL'
-}
 
 alias r=". ranger"
 
 # Cursor 
 export PATH="$PATH:/mnt/c/Users/nizo/AppData/Local/Programs/cursor/resources/app/bin"
 
-# Antigravity
-export PATH="$PATH:/mnt/c/Users/nizo/AppData/Local/Programs/Antigravity/bin"
+# bin
+export PATH="$HOME/.dotfiles/.bin:$PATH"
