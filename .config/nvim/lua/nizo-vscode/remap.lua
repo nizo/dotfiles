@@ -84,11 +84,13 @@ keymap("n", "*", safe_normal_and_center("*"), opts)
 -- Find next occurence of word under the cursor
 keymap("n", "#", safe_normal_and_center("#"), opts)
 
--- navigation cross folded regions
-keymap("n", "j", "gj")
-keymap("n", "k", "gk")
+-- Allow navigation across folded regions
+keymap('n', 'j', "<Cmd>call VSCodeCall('cursorMove', { 'to': 'down', 'by': 'wrappedLine', 'value': 1 })<CR>", opts)
+keymap('n', 'k', "<Cmd>call VSCodeCall('cursorMove', { 'to': 'up', 'by': 'wrappedLine', 'value': 1 })<CR>", opts)
+-- keymap("n", "j", "gj", opts)
+-- keymap("n", "k", "gk", opts)
 
--- setup remapping 
+-- Setup remapping 
 keymap("n", "zM", "<cmd>lua vscode.action('editor.foldAll')<CR>", opts)
 keymap("n", "zR", "<cmd>lua vscode.action('editor.unfoldAll')<CR>", opts)
 keymap("n", "zc", "<cmd>lua vscode.action('editor.fold')<CR>", opts)
